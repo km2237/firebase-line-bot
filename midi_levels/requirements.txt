@@ -1,3 +1,5 @@
 mido
 pretty_midi
 numpy
+matplotlib
+music21
