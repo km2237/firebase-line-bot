@@ -1,6 +1,6 @@
 # midi_levels
 
-Generates graded practice MIDI files (4 levels) from an audio-transcribed solo piano MIDI.
+Generates graded practice MIDI files (6 levels) from an audio-transcribed solo piano MIDI.
 
 ```
 pip install -r requirements.txt
@@ -13,7 +13,9 @@ python make_levels.py song_quantized.mid
 |---|---|---|
 | Lv1 | melody only (octaves folded, top voice) | - |
 | Lv2 | melody only | lowest note on each beat |
-| Lv3 | melody only | as transcribed |
-| Lv4 | as transcribed | as transcribed |
+| Lv3 | melody only | on each beat: bass + one note within a fifth |
+| Lv4 | melody only | on each 8th: bass + one note within a fifth |
+| Lv5 | melody only | as transcribed |
+| Lv6 | as transcribed | as transcribed |
 
 Assumptions: single-track piano MIDI, 2/4 meter, steady 8th-note pulse (tuned on Mozart K.331 "Rondo alla Turca").

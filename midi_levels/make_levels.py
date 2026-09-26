@@ -76,11 +76,30 @@ def bass_on_beats(notes):
     return out
 
 
+def lh_two_notes(notes, step):
+    """Left hand only on multiples of `step` ticks, at most bass + one note within a fifth above it."""
+    g = by_onset(notes)
+    ons = sorted(on for on in g if on % step == 0)
+    out = []
+    for k, on in enumerate(ons):
+        bass = min(g[on], key=lambda x: x[2])
+        upper = [n for n in g[on] if 0 < n[2] - bass[2] <= 7]
+        nxt = ons[k + 1] if k + 1 < len(ons) else on + step
+        end = min(nxt, on + TPB)
+        out.append([on, end, bass[2], bass[3]])
+        if upper:
+            top = max(upper, key=lambda x: x[2])
+            out.append([on, end, top[2], top[3]])
+    return out
+
+
 LEVELS = {
     "Lv1_右手旋律のみ": (top_line(RH), []),
     "Lv2_右手旋律+左手低音": (top_line(RH), bass_on_beats(LH)),
-    "Lv3_右手旋律+左手原曲": (top_line(RH), LH),
-    "Lv4_原曲": (RH, LH),
+    "Lv3_右手旋律+左手4分2音": (top_line(RH), lh_two_notes(LH, TPB)),
+    "Lv4_右手旋律+左手8分2音": (top_line(RH), lh_two_notes(LH, TPB // 2)),
+    "Lv5_右手旋律+左手原曲": (top_line(RH), LH),
+    "Lv6_原曲": (RH, LH),
 }
 
 
